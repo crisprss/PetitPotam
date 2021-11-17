@@ -18,7 +18,7 @@ Petitpotam提供了如下几种接口函数用于本地提权:
 6: EfsRpcRemoveUsersFromFile_Downlevel
 7: EfsRpcAddUsersToFile_Downlevel
 ```
-Usage:Petitpotam <EFS-API-to-use> //选择对应的索引即可
+Usage:Petitpotam \<EFS-API-to-use\> //选择对应的索引即可
 
 ## notice
 管道模拟RPC安全上下文需要`SecurityImpersonation`权限，因此适用于Service服务用户提权至SYSTEM用户
