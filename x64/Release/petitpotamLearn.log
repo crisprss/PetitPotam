@@ -1,8 +1,8 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppBuild.targets(491,5): warning MSB8028: 中间目录(x64\Release\)包含从另一个项目(pepitpotamLearn.vcxproj, petitpotamLearn.vcxproj)共享的文件。   这会导致错误的清除和重新生成行为。
   efsr.cpp
-D:\WindowsLearn\RPC_learn\petitpotamLearn\efsr.cpp(107,10): warning C4477: “wprintf”: 格式字符串“%ws”需要类型“wchar_t *”的参数，但可变参数 1 拥有了类型“RPC_WSTR”
+D:\WindowsLearn\RPC_learn\petitpotamLearn\efsr.cpp(216,10): warning C4477: “wprintf”: 格式字符串“%ws”需要类型“wchar_t *”的参数，但可变参数 1 拥有了类型“RPC_WSTR”
   正在生成代码
-  1 of 55 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
+  2 of 56 functions ( 3.6%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   已完成代码的生成
